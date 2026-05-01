@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Career Pilot — AI Resume & Interview Simulation Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="homepage.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a class="logo" href="#">
+      <img class="logo-icon" src="WhatsApp Image 2026-04-26 at 9.37.29 PM.jpeg" alt="logoimage">
+      Career Pilot
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#audience">Who it's for</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+    <div id="navUserArea">
+      <button class="nav-cta" onclick="window.location.href='getstarted.html'">Get started free</button>
+    </div>
+    <button class="hamburger" id="menuBtn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#features" onclick="closeMenu()">Features</a>
+    <a href="#how" onclick="closeMenu()">How it works</a>
+    <a href="#audience" onclick="closeMenu()">Who it's for</a>
+    <a href="#pricing" onclick="closeMenu()">Pricing</a>
+    <button class="mobile-cta" onclick="window.location.href='getstarted.html'">Get started free</button>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">✦ AI-Powered Career Preparation</div>
+    <h1>Get <span>Job-Ready</span><br>Before the Interview</h1>
+    <p class="hero-sub">Upload your resume for instant AI feedback. Practice mock interviews tailored to your field. Track your progress and land the job.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="window.location.href='dashboard.html'">Start for free</button>
+      <button class="btn-ghost" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">See how it works →</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">AI</div>
+        <div class="stat-label">Instant feedback</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Industry tracks</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Free</div>
+        <div class="stat-label">To get started</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Real</div>
+        <div class="stat-label">Interview scenarios</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="section-tag">What we offer</div>
+    <div class="section-title">Everything you need<br>to ace the interview</div>
+    <p class="section-desc">From resume polish to live mock interviews — Career Pilot gives students real practice, not just advice.</p>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon blue">📄</div>
+        <div class="feat-title">AI resume feedback</div>
+        <div class="feat-desc">Upload your resume and get detailed AI suggestions on content, formatting, and keywords — in seconds.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon purple">🎙️</div>
+        <div class="feat-title">Mock interview simulator</div>
+        <div class="feat-desc">Practice real interview questions for IT, Business, Engineering and more. The AI evaluates your responses live.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon green">📈</div>
+        <div class="feat-title">Performance tracking</div>
+        <div class="feat-desc">See your improvement over time. Track scores across sessions and identify weak areas to focus on.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon amber">🤝</div>
+        <div class="feat-title">HR professional access</div>
+        <div class="feat-desc">Premium users get optional sessions with real HR professionals for deeper, personalized coaching.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="section-tag">Process</div>
+    <div class="section-title">How Career Pilot works</div>
+    <p class="section-desc">Simple steps from signup to success — get job-ready in days, not months.</p>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title">Create your account</div>
+        <div class="step-desc">Sign up free and choose your field — IT, Business, or Engineering.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title">Upload your resume</div>
+        <div class="step-desc">Get instant AI-powered analysis and suggestions to strengthen your CV.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title">Practice interviews</div>
+        <div class="step-desc">Attempt field-specific mock questions and get scored on your answers.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-title">Track & improve</div>
+        <div class="step-desc">Review your scores, revisit tough questions, and grow your confidence.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- WHO IT'S FOR -->
+  <section id="audience">
+    <div class="section-tag">Who it's for</div>
+    <div class="section-title">Built for every student<br>at every stage</div>
+    <div class="audience-grid">
+      <div class="audience-card">
+        <div class="audience-label blue">University students</div>
+        <div class="audience-title">Prepare before graduation</div>
+        <div class="audience-desc">Build your resume and practice interviews while still in university — so you're ready the moment you graduate.</div>
+      </div>
+      <div class="audience-card">
+        <div class="audience-label purple">Fresh graduates</div>
+        <div class="audience-title">Stand out in the job market</div>
+        <div class="audience-desc">Compete confidently against experienced candidates with polished resumes and strong interview skills.</div>
+      </div>
+      <div class="audience-card">
+        <div class="audience-label green">Internship seekers</div>
+        <div class="audience-title">Land your first role</div>
+        <div class="audience-desc">Practice entry-level interview scenarios and tailor your resume to land that first internship or job.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="section-tag">Pricing</div>
+    <div class="section-title">Start free. Upgrade<br>when you're ready.</div>
+    <p class="section-desc">Our freemium model means no barriers to entry — advanced features unlock as your career journey grows.</p>
+    <div class="plans-grid">
+      <div class="plan">
+        <div class="plan-name">Free</div>
+        <div class="plan-price">PKR 0 <span>/month</span></div>
+        <div class="plan-sub">No credit card needed</div>
+        <hr>
+        <ul class="plan-features">
+          <li>Resume upload &amp; basic feedback</li>
+          <li>5 mock interview sessions</li>
+          <li>Basic performance score</li>
+          <li class="muted">Detailed AI feedback</li>
+          <li class="muted">Unlimited practice</li>
+          <li class="muted">HR professional sessions</li>
+        </ul>
+        <button class="plan-btn ghost" onclick="window.location.href='getstarted.html'">Get started</button>
+      </div>
+      <div class="plan featured">
+        <div class="plan-badge">Most popular</div>
+        <div class="plan-name">Premium</div>
+        <div class="plan-price">PKR 999 <span>/month</span></div>
+        <div class="plan-sub">Best for serious job seekers</div>
+        <hr>
+        <ul class="plan-features">
+          <li>Everything in Free</li>
+          <li>Unlimited interview practice</li>
+          <li>Detailed AI answer feedback</li>
+          <li>Progress tracking dashboard</li>
+          <li>Field-specific question sets</li>
+          <li class="muted">HR professional sessions</li>
+        </ul>
+        <button class="plan-btn primary" onclick="window.location.href='getstarted.html'">Upgrade to Premium</button>
+      </div>
+      <div class="plan">
+        <div class="plan-name">University</div>
+        <div class="plan-price">Custom</div>
+        <div class="plan-sub">For institutions &amp; partnerships</div>
+        <hr>
+        <ul class="plan-features">
+          <li>All Premium features</li>
+          <li>Live HR professional sessions</li>
+          <li>University-wide access</li>
+          <li>Admin dashboard</li>
+          <li>Bulk student onboarding</li>
+          <li>Priority support</li>
+        </ul>
+        <button class="plan-btn ghost">Contact us</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Career Pilot</div>
+    <div class="footer-copy">© 2026 Career Pilot — Making students job-ready</div>
+  </footer>
+
+  <script src="homepage.js"></script>
+  <script>
+    /* ── AUTH GUARD: redirect to getstarted if not logged in ── */
+    const cpUser = sessionStorage.getItem('cp_user');
+
+    if (!cpUser) {
+      /* Not logged in — redirect to sign up/login page */
+      window.location.href = 'getstarted.html';
+    } else {
+      /* Logged in — show welcome greeting in navbar */
+      const navArea = document.getElementById('navUserArea');
+      navArea.innerHTML = `
+        <span class="nav-user">👋 Hi, ${cpUser}!</span>
+        <button class="nav-logout" onclick="logout()">Logout</button>
+      `;
+    }
+
+    function logout() {
+      sessionStorage.removeItem('cp_user');
+      window.location.href = 'getstarted.html';
+    }
+  </script>
+
+</body>
+</html>

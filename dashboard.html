@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Career Pilot — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">
+    <img class="logo-icon" src="WhatsApp Image 2026-04-26 at 9.37.29 PM.jpeg" alt="logoimage">
+    Career Pilot
+  </a>
+  <div class="nav-right">
+    <span class="nav-user" id="navWelcome"></span>
+    <button class="nav-logout" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<!-- DASHBOARD LAYOUT -->
+<div class="dashboard">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Overview</div>
+    <button class="sidebar-item active" onclick="showView('overview', this)">
+      <span class="sidebar-icon">📊</span> Dashboard
+    </button>
+
+    <div class="sidebar-label">Tools</div>
+    <button class="sidebar-item" onclick="showView('resume', this)">
+      <span class="sidebar-icon">📄</span> CV Analyzer
+    </button>
+    <button class="sidebar-item" onclick="showView('interview', this)">
+      <span class="sidebar-icon">🎙️</span> Mock Interview
+    </button>
+
+    <div class="sidebar-label">Insights</div>
+    <button class="sidebar-item" onclick="showView('progress', this)">
+      <span class="sidebar-icon">📈</span> My Progress
+    </button>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- ════ OVERVIEW ════ -->
+    <div class="view active" id="view-overview">
+      <div class="page-header">
+        <div class="page-tag">Dashboard</div>
+        <div class="page-title">Welcome back, <span id="overviewName" style="color:var(--accent)"></span> 👋</div>
+        <p class="page-sub">Here's your career progress at a glance.</p>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-card-label">📄 CV Score</div>
+          <div class="stat-card-num accent" id="stat-cv">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">🎙️ Interviews Done</div>
+          <div class="stat-card-num purple" id="stat-interviews">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">📈 Avg. Interview Score</div>
+          <div class="stat-card-num green" id="stat-avg">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">🏆 Badges Earned</div>
+          <div class="stat-card-num amber" id="stat-badges">0</div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px">
+        <div class="card">
+          <div class="card-title">Quick Actions</div>
+          <div class="card-sub">Get started with your career prep.</div>
+          <div style="display:flex; flex-direction:column; gap:10px">
+            <button class="btn-primary" onclick="showView('resume', document.querySelector('[onclick*=resume]'))">📄 Analyze my CV</button>
+            <button class="btn-primary" style="background:var(--purple)" onclick="showView('interview', document.querySelector('[onclick*=interview]'))">🎙️ Start Mock Interview</button>
+            <button class="btn-outline" onclick="showView('progress', document.querySelector('[onclick*=progress]'))">📈 View Progress Report</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Recent Activity</div>
+          <div class="card-sub">Your latest sessions.</div>
+          <div id="recent-activity" style="font-size:13px; color:var(--muted)">No sessions yet. Start by analyzing your CV or doing a mock interview!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ RESUME / CV ════ -->
+    <div class="view" id="view-resume">
+      <div class="page-header">
+        <div class="page-tag">CV Analyzer</div>
+        <div class="page-title">AI-Powered Resume Scoring</div>
+        <p class="page-sub">Upload your CV and get instant AI feedback with actionable suggestions.</p>
+      </div>
+
+      <div class="card" style="margin-bottom:20px">
+        <div class="card-title">Upload Your CV</div>
+        <div class="card-sub">Supports PDF, DOCX, and TXT files. Your file is analyzed privately.</div>
+
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="cvFile" accept=".pdf,.doc,.docx,.txt" onchange="handleFileSelect(this)" />
+          <div class="upload-icon">📂</div>
+          <div class="upload-title" id="uploadTitle">Drop your CV here or click to browse</div>
+          <div class="upload-sub" id="uploadSub">PDF, DOCX, or TXT — up to 5MB</div>
+        </div>
+
+        <div id="uploadLoading" style="display:none" class="loading">
+          <div class="spinner"></div>
+          AI is analyzing your CV...
+        </div>
+
+        <div id="analyzeBtn" style="margin-top:16px; display:none">
+          <button class="btn-primary" onclick="analyzeCV()">✨ Analyze with AI</button>
+          <span id="fileName" style="font-size:13px; color:var(--muted); margin-left:12px"></span>
+        </div>
+      </div>
+
+      <!-- AI RESULT -->
+      <div class="ai-result card" id="cvResult">
+        <div class="score-ring-wrap">
+          <div class="score-ring">
+            <svg width="120" height="120" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="10"/>
+              <circle id="scoreCircle" cx="60" cy="60" r="50" fill="none"
+                stroke="url(#scoreGrad)" stroke-width="10"
+                stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314"/>
+              <defs>
+                <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#4F7EFF"/>
+                  <stop offset="100%" stop-color="#A259FF"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="score-ring-label">
+              <div class="score-num" id="cvScoreNum">0</div>
+              <div class="score-tag">/100</div>
+            </div>
+          </div>
+          <div class="score-info">
+            <h3 id="cvScoreLabel">Analyzing…</h3>
+            <p id="cvScoreSummary">Getting your results ready…</p>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px">
+          <div style="font-size:13px; font-weight:500; margin-bottom:10px; color:var(--muted)">DETAILED FEEDBACK</div>
+          <ul class="feedback-list" id="cvFeedbackList"></ul>
+        </div>
+
+        <button class="btn-primary" onclick="showView('interview', document.querySelector('[onclick*=interview]'))">
+          🎙️ Now practice your interview →
+        </button>
+      </div>
+    </div>
+
+    <!-- ════ INTERVIEW ════ -->
+    <div class="view" id="view-interview">
+      <div class="page-header">
+        <div class="page-tag">Mock Interview</div>
+        <div class="page-title">AI Interview Simulator</div>
+        <p class="page-sub">Practice with an AI interviewer tailored to your field. Build confidence before the real thing.</p>
+      </div>
+
+      <!-- Field selection -->
+      <div id="fieldSelect">
+        <div class="card" style="margin-bottom:20px">
+          <div class="card-title">Choose Your Field</div>
+          <div class="card-sub">The AI will ask questions relevant to your specific domain.</div>
+          <div class="field-grid">
+            <div class="field-card" onclick="selectField('it', this)">
+              <div class="field-icon">💻</div>
+              <div class="field-name">Information Technology</div>
+              <div class="field-count">30+ questions</div>
+            </div>
+            <div class="field-card" onclick="selectField('business', this)">
+              <div class="field-icon">📊</div>
+              <div class="field-name">Business & Management</div>
+              <div class="field-count">30+ questions</div>
+            </div>
+            <div class="field-card" onclick="selectField('engineering', this)">
+              <div class="field-icon">⚙️</div>
+              <div class="field-name">Engineering</div>
+              <div class="field-count">30+ questions</div>
+            </div>
+          </div>
+
+          <div id="difficultyRow" style="display:none; margin-top:16px">
+            <div style="font-size:13px; color:var(--muted); margin-bottom:10px">Difficulty Level</div>
+            <div style="display:flex; gap:10px">
+              <button class="btn-outline diff-btn active" data-d="beginner" onclick="selectDiff('beginner',this)">🟢 Beginner</button>
+              <button class="btn-outline diff-btn" data-d="intermediate" onclick="selectDiff('intermediate',this)">🟡 Intermediate</button>
+              <button class="btn-outline diff-btn" data-d="advanced" onclick="selectDiff('advanced',this)">🔴 Advanced</button>
+            </div>
+          </div>
+
+          <div id="startBtnWrap" style="display:none; margin-top:20px">
+            <button class="btn-primary" onclick="startInterview()">🚀 Start Interview Session</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active session -->
+      <div class="interview-session" id="interviewSession">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
+          <div>
+            <div style="font-size:13px; color:var(--muted)">Session in progress</div>
+            <div style="font-family:'Syne',sans-serif; font-size:18px; font-weight:700" id="sessionLabel"></div>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center">
+            <div style="font-size:13px; color:var(--muted)">Question <span id="qCount">1</span>/5</div>
+            <button class="btn-outline" onclick="endInterview()">End Session</button>
+          </div>
+        </div>
+
+        <div class="chat-box" id="chatBox"></div>
+
+        <div class="chat-input-row">
+          <textarea class="chat-input" id="userAnswer" placeholder="Type your answer here…" rows="2"
+            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAnswer();}"></textarea>
+          <button class="chat-send" id="sendBtn" onclick="sendAnswer()">➤</button>
+        </div>
+
+        <!-- end score -->
+        <div class="interview-score-card" id="interviewScoreCard">
+          <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px">
+            <div style="font-size:40px">🏆</div>
+            <div>
+              <div style="font-family:'Syne',sans-serif; font-size:22px; font-weight:800">
+                Session Complete! Score: <span id="iScoreNum" style="color:var(--green)"></span>/100
+              </div>
+              <div style="font-size:13px; color:var(--muted)" id="iScoreMsg"></div>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap">
+            <button class="btn-primary" onclick="retryInterview()">🔄 New Session</button>
+            <button class="btn-outline" onclick="showView('progress', document.querySelector('[onclick*=progress]'))">📈 View Progress</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ PROGRESS ════ -->
+    <div class="view" id="view-progress">
+      <div class="page-header">
+        <div class="page-tag">Progress Tracker</div>
+        <div class="page-title">Your Performance Over Time</div>
+        <p class="page-sub">Track improvements across CV analysis and mock interview sessions.</p>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-card-label">📊 Overall Readiness</div>
+          <div class="stat-card-num accent" id="prog-readiness">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">🎙️ Total Sessions</div>
+          <div class="stat-card-num purple" id="prog-sessions">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">📈 Best Score</div>
+          <div class="stat-card-num green" id="prog-best">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">🔥 Streak</div>
+          <div class="stat-card-num amber" id="prog-streak">0 days</div>
+        </div>
+      </div>
+
+      <div class="progress-grid">
+        <div class="card">
+          <div class="card-title">Skills Breakdown</div>
+          <div class="card-sub">Based on your sessions so far.</div>
+          <div class="bar-chart" id="skillBars">
+            <div class="bar-row">
+              <div class="bar-label"><span>Communication</span><span id="bar-comm-val">0%</span></div>
+              <div class="bar-track"><div class="bar-fill" id="bar-comm" style="width:0%"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label"><span>Technical Knowledge</span><span id="bar-tech-val">0%</span></div>
+              <div class="bar-track"><div class="bar-fill" id="bar-tech" style="width:0%"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label"><span>Problem Solving</span><span id="bar-prob-val">0%</span></div>
+              <div class="bar-track"><div class="bar-fill" id="bar-prob" style="width:0%"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label"><span>Confidence</span><span id="bar-conf-val">0%</span></div>
+              <div class="bar-track"><div class="bar-fill" id="bar-conf" style="width:0%"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label"><span>Resume Quality</span><span id="bar-cv-val">0%</span></div>
+              <div class="bar-track"><div class="bar-fill" id="bar-cv" style="width:0%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Session History</div>
+          <div class="card-sub">Your recent practice records.</div>
+          <div class="sessions-list" id="sessionHistory">
+            <div style="font-size:13px; color:var(--dim)">No sessions yet. Complete a CV analysis or mock interview to see records here.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Badges -->
+      <div class="card" style="margin-top:20px">
+        <div class="card-title">🏅 Achievement Badges</div>
+        <div class="card-sub">Earn badges by completing milestones.</div>
+        <div class="badge-row" id="badgeList">
+          <div class="badge-item" id="badge-first-cv">📄 First CV Analyzed</div>
+          <div class="badge-item" id="badge-first-interview">🎙️ First Interview Done</div>
+          <div class="badge-item" id="badge-score-70">⭐ Scored 70+</div>
+          <div class="badge-item" id="badge-score-90">🌟 Scored 90+</div>
+          <div class="badge-item" id="badge-5-sessions">🔥 5 Sessions</div>
+          <div class="badge-item" id="badge-cv-80">💎 CV Score 80+</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="dashboard.js"></script>
+
+<!-- FLOATING FEEDBACK BUTTON -->
+<a href="https://forms.gle/q472u1AGd1fGy39B8" target="_blank" class="feedback-fab" title="Give us feedback">
+  <span class="feedback-fab-icon">💬</span>
+  <span class="feedback-fab-label">Feedback</span>
+</a>
+
+</body>
+</html>
